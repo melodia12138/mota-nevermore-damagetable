@@ -5,8 +5,10 @@
 """
 
 import contextlib
+import glob
 import io
 
+import matplotlib.font_manager as fm
 import matplotlib.pyplot as plt
 import numpy as np
 import streamlit as st
@@ -15,9 +17,12 @@ import damage_calc as dc
 from equipment import EQUIPMENT
 from monsters import MONSTERS
 
-# 中文字体:Streamlit Cloud 会通过 packages.txt 装 fonts-noto-cjk
-plt.rcParams['font.sans-serif'] = ['Noto Sans CJK SC', 'Microsoft YaHei',
-                                   'SimHei', 'DejaVu Sans']
+# Streamlit Cloud(Linux) 通过 packages.txt 装 fonts-noto-cjk,但 matplotlib
+# 启动时已经缓存了字体表,新装的字体不会被自动发现 → 这里手动 addfont 注册。
+for _p in glob.glob('/usr/share/fonts/**/NotoSansCJK*', recursive=True):
+    fm.fontManager.addfont(_p)
+plt.rcParams['font.sans-serif'] = ['Noto Sans CJK SC', 'Noto Sans CJK JP',
+                                   'Microsoft YaHei', 'SimHei', 'DejaVu Sans']
 plt.rcParams['axes.unicode_minus'] = False
 
 st.set_page_config(page_title='永不复还 500F · 怪物伤害表', layout='wide')
