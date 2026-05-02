@@ -13,7 +13,6 @@ from itertools import combinations_with_replacement
 
 import numpy as np
 from matplotlib.figure import Figure
-from IPython.display import display
 
 
 # ---------------------- 基础公式 ----------------------
@@ -393,6 +392,7 @@ def build_heatmap(mon, hero_base, loadouts, atk_delta_range, def_delta_range):
 
 def draw_heatmap(mon, hero_base, loadouts, atk_delta_range, def_delta_range):
     """notebook 用:构造 figure 并 display。"""
+    from IPython.display import display
     fig = build_heatmap(mon, hero_base, loadouts, atk_delta_range, def_delta_range)
     display(fig)
 
@@ -408,6 +408,7 @@ def make_damage_ui(hero_base, loadouts, atk_delta_range, def_delta_range,
     - 打印各装备详情 checkbox(默认取 print_loadouts)
     """
     import ipywidgets as widgets
+    from IPython.display import display
 
     dd = widgets.Dropdown(options=list(MONSTERS.keys()),
                           value=default_monster_name, description='怪物')
